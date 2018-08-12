@@ -91,6 +91,7 @@ Vagrant.configure("2") do |config|
       rm -rf ansible-isucon
     SHELL
     web.vm.synced_folder "./", "/home/isucon/isubata/webapp", owner: "isucon", group: "isucon"
+    web.vm.network "private_network", ip: "192.168.30.10"
   end
 
   config.vm.define "bench" do |bench|
