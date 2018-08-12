@@ -23,6 +23,15 @@ services:
       - ./logs/nginx:/var/log/nginx
       - ./public:/var/www/public
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+  ngx-mruby:
+    image: saboyutaka/ngx-mruby
+    ports:
+      - 80:80
+    volumes:
+      - ./logs/ngx_mruby:/usr/local/nginx/logs
+      - ./public:/var/www/public
+      - ./config/ngx_mruby/nginx.conf:/usr/local/nginx/conf/nginx.conf
+      - ./ngx_mruby/hook:/usr/local/nginx/hook
   db:
     image: mysql:5.7
     environment:
