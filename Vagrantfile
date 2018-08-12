@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   #config.vm.network "private_network", ip: "192.168.30.10"
-  #config.vm.network "private_network", type: "dhcp"
+  config.vm.network "private_network", type: "dhcp"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
       )
       rm -rf ansible-isucon
     SHELL
-    web.vm.network "private_network", ip: "192.168.30.10"
+    web.vm.synced_folder "./", "/home/isucon/isubata/webapp", owner: "isucon", group: "isucon"
   end
 
   config.vm.define "bench" do |bench|
@@ -108,7 +108,6 @@ Vagrant.configure("2") do |config|
       )
       rm -rf ansible-isucon
     SHELL
-    bench.vm.network "private_network", ip: "192.168.30.11"
   end
 end
 
