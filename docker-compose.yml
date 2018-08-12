@@ -1,0 +1,47 @@
+version: '3'
+services:
+  web:
+    container_name: 'isucon7q_web'
+    build: .
+    command: "bundle exec rackup -p 8000 -o 0.0.0.0"
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    tty: true
+    stdin_open: true
+    environment:
+      ISUBATA_DB_HOST: db
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./logs/nginx:/var/log/nginx
+      - ./public:/var/www/public
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-volume:/var/lib/mysql
+      - ./config/mysql:/etc/mysql/conf.d
+      - ./logs/mysql:/var/log/mysql
+      - ./db:/var/tmp
+  alp:
+    image: saboyutaka/alp
+    volumes:
+      - ./logs/nginx:/logs
+  myprofiler:
+    image: saboyutaka/myprofiler
+    command: ["-host=db", "-user=root"]
+    depends_on:
+      - db
+volumes:
+  mysql-volume:
