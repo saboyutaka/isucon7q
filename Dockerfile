@@ -13,7 +13,5 @@ RUN apt-get update -qq && \
 
 WORKDIR /app/ruby
 
-ENV BUNDLE_PATH vendor/bundle
-
 RUN bundle config --local build.nokogiri --use-system-libraries && \
     bundle config --local job 10

@@ -6,6 +6,7 @@ services:
     command: "bundle exec rackup -p 8000 -o 0.0.0.0"
     volumes:
       - .:/app
+      - bundle-volume:/usr/local/bundle
     ports:
       - 8000:8000
     depends_on:
@@ -45,3 +46,4 @@ services:
       - db
 volumes:
   mysql-volume:
+  bundle-volume:
